@@ -73,4 +73,4 @@ console.log(db.get("users"))
 
 # Limitations
 1. **No data destruction**: You cannot destroy data and unlist them. A manual mechanism for considering data as destroyed may be necessary.
-2. **Not real-time update**: Pouch relies on caching, fetching data from the cache rather than the actual cloud database. Re-initializing the database may be required for updated data.
+2. **Not real-time update**: Vatch relies on caching, fetching data from the cache rather than the actual cloud database. Re-initializing the database may be required for updated data.
