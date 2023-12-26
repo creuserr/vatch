@@ -1,6 +1,6 @@
-// https://github.com/creuserr/pouch
+// https://github.com/creuserr/vatch
 
-async function Pouch(key) {
+async function Vatch(key) {
   async function _getjson(path) {
     var req = await fetch(path);
     return await req.json();
@@ -62,9 +62,9 @@ async function Pouch(key) {
     // get data: 0 request
     get(name) {
       if(!this.dataset.includes(name)) return;
-      return JSON.parse(_decompress(this.cache.filter(function(c) {
-        return c.title == `pdl-${btoa(name)}`;
-      })[0].description));
+      return JSON.parse(_decompress(this.cache.find(function(c) {
+        return c.title == `vdb-${btoa(name)}`;
+      }).description));
     },
     // set data: 1 request
     async set(name, content) {
@@ -74,22 +74,22 @@ async function Pouch(key) {
         children: [content]
       }]));
       if(!this.dataset.includes(name)) {
-        var req = await _getjson(`https://api.telegra.ph/createPage?access_token=${this.access}&title=pdl-${btoa(name)}&content=${reqc}`);
+        var req = await _getjson(`https://api.telegra.ph/createPage?access_token=${this.access}&title=vdb-${btoa(name)}&content=${reqc}`);
         if(req.ok != true) throw req.error;
         this.cache.push({
-          title: `pdl-${btoa(name)}`,
+          title: `vdb-${btoa(name)}`,
           path: req.result.path,
           description: content
         });
         this.dataset.push(name);
       } else {
         var i = 0;
-        var path = this.cache.filter(function(c, a) {
-          var b = c.title == `pdl-${btoa(escape(name))}`;
+        var path = this.cache.find(function(c, a) {
+          var b = c.title == `vdb-${btoa(escape(name))}`;
           if(c == true) i = a;
           return c;
-        })[0].path;
-        var req = await _getjson(`https://api.telegra.ph/editPage?access_token=${this.access}&path=${path}&title=pdl-${btoa(name)}&content=${reqc}`);
+        }).path;
+        var req = await _getjson(`https://api.telegra.ph/editPage?access_token=${this.access}&path=${path}&title=vdb-${btoa(name)}&content=${reqc}`);
         this.cache[i].description = content;
       }
     }
@@ -100,7 +100,7 @@ async function Pouch(key) {
     var req = await _getjson(`https://api.telegra.ph/getPageList?access_token=${key}`);
     if(req.ok != true) throw req.error;
     var page = req.result.pages.filter(function(i) {
-      return i.title.startsWith("pdlx-");
+      return i.title.startsWith("vdbx-");
     })[0];
     var content = JSON.parse(_decompress(page.description));
     instance.creation = content.creation;
@@ -111,14 +111,14 @@ async function Pouch(key) {
   } else {
     // create database: 2 requests
     var n = _hash(Math.random().toString());
-    var req = await _getjson(`https://api.telegra.ph/createAccount?short_name=pdlx-${n}`);
+    var req = await _getjson(`https://api.telegra.ph/createAccount?short_name=vdbx-${n}`);
     if(req.ok != true) throw req.error;
     instance.access = req.result.access_token;
     var date = Date.now();
-    var req = await _getjson(`https://api.telegra.ph/createPage?access_token=${instance.access}&title=pdlx-${n}&content=${encodeURI(JSON.stringify([{
+    var req = await _getjson(`https://api.telegra.ph/createPage?access_token=${instance.access}&title=vdbx-${n}&content=${encodeURI(JSON.stringify([{
       tag: "p",
       children: [_compress(JSON.stringify({
-        version: Pouch.version,
+        version: Vatch.version,
         agent: navigator.userAgent,
         creation: date
       }))]
@@ -126,14 +126,14 @@ async function Pouch(key) {
     if(req.ok != true) throw req.error;
     instance.creation = date;
     instance.agent = navigator.userAgent;
-    instance.version = Pouch.version;
+    instance.version = Vatch.version;
     instance.root = req.result;
   }
   instance.cache.forEach(function(c) {
-    if(c.title.startsWith("pdlx-")) return;
-    instance.dataset.push(atob(c.title.replace(/pdl\-/, "")));
+    if(c.title.startsWith("vdbx-")) return;
+    instance.dataset.push(atob(c.title.replace(/vdb\-/, "")));
   });
   return instance;
 }
 
-Pouch.version = 1;
+Vatch.version = 1;
