@@ -81,7 +81,7 @@ async function Vatch(key) {
         version: Vatch.version,
         agent: navigator.userAgent,
         creation: date,
-        variant: 
+        variant: Vatch.variant;
       }))]
     }]))}`);
     if(req.ok != true) throw req.error;
@@ -99,3 +99,4 @@ async function Vatch(key) {
 }
 
 Vatch.version = 1;
+Vatch.variant = "nocompress";
