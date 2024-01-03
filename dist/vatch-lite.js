@@ -18,12 +18,12 @@ async function Vatch(key) {
     return hash.toString(16);
   }
   var instance = {
-    cache: [],
+    _cache: [],
     dataset: [],
     // get data: 0 request
     get(name) {
       if(!this.dataset.includes(name)) return;
-      return JSON.parse(unescape(this.cache.find(function(c) {
+      return JSON.parse(unescape(this._cache.find(function(c) {
         return c.title == `vdb-${btoa(name)}`;
       }).description));
     },
@@ -37,7 +37,7 @@ async function Vatch(key) {
       if(!this.dataset.includes(name)) {
         var req = await _getjson(`https://api.telegra.ph/createPage?access_token=${this.access}&title=vdb-${btoa(name)}&content=${reqc}`);
         if(req.ok != true) throw req.error;
-        this.cache.push({
+        this._cache.push({
           title: `vdb-${btoa(name)}`,
           path: req.result.path,
           description: content
@@ -45,13 +45,13 @@ async function Vatch(key) {
         this.dataset.push(name);
       } else {
         var i = 0;
-        var path = this.cache.find(function(c, a) {
+        var path = this._cache.find(function(c, a) {
           var b = c.title == `vdb-${btoa(escape(name))}`;
           if(c == true) i = a;
           return c;
         }).path;
         var req = await _getjson(`https://api.telegra.ph/editPage?access_token=${this.access}&path=${path}&title=vdb-${btoa(name)}&content=${reqc}`);
-        this.cache[i].description = content;
+        this._cache[i].description = content;
       }
     }
   }
@@ -60,7 +60,7 @@ async function Vatch(key) {
     instance.access = key;
     var req = await _getjson(`https://api.telegra.ph/getPageList?access_token=${key}`);
     if(req.ok != true) throw req.error;
-    instance.cache = req.result.pages;
+    instance._cache = req.result.pages;
   } else {
     // create database: 1 request
     var n = _hash(Math.random().toString());
@@ -70,7 +70,7 @@ async function Vatch(key) {
     if(req.ok != true) throw req.error;
     instance.version = Vatch.version;
   }
-  instance.cache.forEach(function(c) {
+  instance._cache.forEach(function(c) {
     instance.dataset.push(atob(c.title.replace(/vdb\-/, "")));
   });
   return instance;
