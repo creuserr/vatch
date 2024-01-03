@@ -23,7 +23,7 @@ async function Vatch(key) {
     // get data: 0 request
     get(name) {
       if(!this.dataset.includes(name)) return;
-      return JSON.parse(_decompress(this.cache.find(function(c) {
+      return JSON.parse(unescape(this.cache.find(function(c) {
         return c.title == `vdb-${btoa(name)}`;
       }).description));
     },
@@ -63,35 +63,21 @@ async function Vatch(key) {
     var page = req.result.pages.filter(function(i) {
       return i.title.startsWith("vdbx-");
     })[0];
-    var content = JSON.parse(_decompress(page.description));
+    var content = JSON.parse(unescape(page.description));
     instance.creation = content.creation;
     instance.agent = content.agent;
     instance.version = content.version;
     instance.cache = req.result.pages;
-    instance.root = page;
   } else {
     // create database: 2 requests
     var n = _hash(Math.random().toString());
     var req = await _getjson(`https://api.telegra.ph/createAccount?short_name=vdbx-${n}`);
     if(req.ok != true) throw req.error;
     instance.access = req.result.access_token;
-    var date = Date.now();
-    var req = await _getjson(`https://api.telegra.ph/createPage?access_token=${instance.access}&title=vdbx-${n}&content=${encodeURI(JSON.stringify([{
-      tag: "p",
-      children: [escape(JSON.stringify({
-        version: Vatch.version,
-        agent: navigator.userAgent,
-        creation: date
-      }))]
-    }]))}`);
     if(req.ok != true) throw req.error;
-    instance.creation = date;
-    instance.agent = navigator.userAgent;
     instance.version = Vatch.version;
-    instance.root = req.result;
   }
   instance.cache.forEach(function(c) {
-    if(c.title.startsWith("vdbx-")) return;
     instance.dataset.push(atob(c.title.replace(/vdb\-/, "")));
   });
   return instance;
