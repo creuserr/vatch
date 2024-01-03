@@ -5,45 +5,11 @@ async function Vatch(key) {
     var req = await fetch(path);
     return await req.json();
   }
-  function _pair([a, b]) {
-    return 0.5 * (a + b) * (a + b + 1) + b;
-  }
-  function _unpair(n) {
-    var w = Math.floor((Math.sqrt(8 * n + 1) - 1) / 2);
-    var t = (w ** 2 + w) / 2;
-    var b = n - t;
-    var a = w - b;
-    return [a, b];
-  }
   function _compress(text) {
-    var nums = text.toString().split("").map(function(char) {
-      return char.charCodeAt(0);
-    });
-    var pairs = [];
-    var cur = null;
-    nums.forEach(function(num) {
-      if(cur == null) cur = num;
-      else {
-        pairs.push([cur, num]);
-        cur = null;
-      }
-    });
-    if(cur != null) pairs.push([cur, 0]);
-    return pairs.map(function(pair) {
-      return String.fromCharCode(_pair(pair));
-    }).join("");
+    return btoa(encodeURI(text));
   }
   function _decompress(text) {
-    var res = "";
-    text.split("").map(function(item) {
-      return _unpair(item.charCodeAt(0));
-    }).forEach(function(pair) {
-      pair.forEach(function(num) {
-        if(num == 0) return;
-        else res += String.fromCharCode(num);
-      });
-    });
-    return res;
+    return decodeURI(atob(text));
   }
   function _hash(raw) {
     var hash = 0;
