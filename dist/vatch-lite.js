@@ -20,9 +20,10 @@ async function VatchLite(key) {
   var instance = {
     _cache: [],
     dataset: [],
-    // get data: 0 request
+    // get data: 1 request
     get(name) {
       if(!this.dataset.includes(name)) return;
+      var cache = this._cache.find(function())
       return JSON.parse(unescape(this._cache.find(function(c) {
         return c.title == `vdb-${btoa(name)}`;
       }).description));
