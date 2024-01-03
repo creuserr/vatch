@@ -81,7 +81,7 @@ async function Vatch(key) {
         version: Vatch.version,
         agent: navigator.userAgent,
         creation: date,
-        variant: Vatch.variant;
+        variant: Vatch.variant
       }))]
     }]))}`);
     if(req.ok != true) throw req.error;
