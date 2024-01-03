@@ -59,7 +59,7 @@ async function Vatch(key) {
     // init database: 1 request
     instance.access = key;
     var req = await _getjson(`https://api.telegra.ph/getPageList?access_token=${key}`);
-    if(req.ok != true) throw req.error
+    if(req.ok != true) throw req.error;
     instance.cache = req.result.pages;
   } else {
     // create database: 1 request
