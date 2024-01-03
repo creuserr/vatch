@@ -26,8 +26,8 @@ async function VatchLite(key) {
       var cache = this._cache.find(function(c) {
         return c.title == `vdb-${btoa(name)}`;
       });
-      if(cache != null) return JSON.parse(unescape(cache.cached));
-      await _getjson(`https://api.telegra.ph/getPage?access_token=${`)
+      if(cache.cached != null) return JSON.parse(unescape(cache.cached));
+      vaawait _getjson(`https://api.telegra.ph/getPage?access_token=${this.access}&path=${cache.path}`);
     },
     // set data: 1 request
     async set(name, content) {
