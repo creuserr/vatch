@@ -24,11 +24,10 @@ async function VatchLite(key) {
     get(name) {
       if(!this.dataset.includes(name)) return;
       var cache = this._cache.find(function(c) {
-        return `vdb-${btoa(name)}` == ;
-      })
-      return JSON.parse(unescape(this._cache.find(function(c) {
         return c.title == `vdb-${btoa(name)}`;
-      }).description));
+      });
+      if(cache != null) return cache.cached;
+      return JSON.parse(unescape(.description));
     },
     // set data: 1 request
     async set(name, content) {
