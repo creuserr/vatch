@@ -77,15 +77,3 @@ async function Vatch(key) {
 }
 
 Vatch.version = 1;
-
-
-(async function() {
-  var db = await Vatch();
-  db.set("blogs", [{
-    color: 1,
-    instead: {
-      okay: true
-    }
-  }]);
-  console.log(db);
-})();
