@@ -24,7 +24,7 @@ async function VatchLite(key) {
     get(name) {
       if(!this.dataset.includes(name)) return;
       var cache = this._cache.find(function(c) {
-        return  == name;
+        return `vdb-${btoa(name)}` == ;
       })
       return JSON.parse(unescape(this._cache.find(function(c) {
         return c.title == `vdb-${btoa(name)}`;
