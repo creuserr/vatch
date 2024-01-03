@@ -77,3 +77,9 @@ async function Vatch(key) {
 }
 
 Vatch.version = 1;
+
+
+(async function() {
+  var db = await Vatch();
+  console.log(db);
+})();
