@@ -80,12 +80,3 @@ async function VatchLite(key) {
 }
 
 VatchLite.version = 1;
-
-(async function() {
-  var db = await VatchLite();
-  await db.set("test", {
-    uuid: crypto.randomUUID()
-  });
-  console.log(await db.get("test"));
-  console.log(await db.get("test"));
-})();
