@@ -1,7 +1,7 @@
 // https://github.com/creuserr/vatch
 // the smallest foundation of Vatch
 
-async function Vatch(key) {
+async function VatchLite(key) {
   async function _getjson(path) {
     var req = await fetch(path);
     return await req.json();
@@ -68,7 +68,6 @@ async function Vatch(key) {
     if(req.ok != true) throw req.error;
     instance.access = req.result.access_token;
     if(req.ok != true) throw req.error;
-    instance.version = Vatch.version;
   }
   instance._cache.forEach(function(c) {
     instance.dataset.push(atob(c.title.replace(/vdb\-/, "")));
@@ -76,4 +75,4 @@ async function Vatch(key) {
   return instance;
 }
 
-Vatch.version = 1;
+VatchLite.version = 1;
