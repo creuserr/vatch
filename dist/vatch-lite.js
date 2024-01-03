@@ -87,4 +87,5 @@ VatchLite.version = 1;
     uuid: crypto.randomUUID()
   });
   console.log(await db.get("test"));
+  console.log(await db.get("test"));
 });
