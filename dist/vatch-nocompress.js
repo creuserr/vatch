@@ -28,7 +28,7 @@ async function Vatch(key) {
     },
     // set data: 1 request
     async set(name, content) {
-      content = encodeURI(JSON.stringify(content));
+      content = (JSON.stringify(content));
       var reqc = encodeURI(JSON.stringify([{
         tag: "p",
         children: [content]
