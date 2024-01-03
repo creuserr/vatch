@@ -6,10 +6,10 @@ async function Vatch(key) {
     return await req.json();
   }
   function _compress(text) {
-    return text;
+    return escape(text);
   }
   function _decompress(text) {
-    return text;
+    return unescape(text);
   }
   function _hash(raw) {
     var hash = 0;
