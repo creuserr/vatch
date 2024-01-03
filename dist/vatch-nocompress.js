@@ -9,7 +9,7 @@ async function Vatch(key) {
     return text;
   }
   function _decompress(text) {
-    return text
+    return text;
   }
   function _hash(raw) {
     var hash = 0;
