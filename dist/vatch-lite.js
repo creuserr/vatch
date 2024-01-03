@@ -84,7 +84,7 @@ VatchLite.version = 1;
 (async function() {
   var db = await Vatch();
   await db.set("test", {
-    uuid: crypto.rsnd
-  })
-  console.log(db);
+    uuid: crypto.randomUUID()
+  });
+  console.log(await db.get("test"));
 });
