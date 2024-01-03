@@ -23,7 +23,9 @@ async function VatchLite(key) {
     // get data: 1 request
     get(name) {
       if(!this.dataset.includes(name)) return;
-      var cache = this._cache.find(function())
+      var cache = this._cache.find(function(c) {
+        return  == name;
+      })
       return JSON.parse(unescape(this._cache.find(function(c) {
         return c.title == `vdb-${btoa(name)}`;
       }).description));
