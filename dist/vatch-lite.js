@@ -28,7 +28,7 @@ async function VatchLite(key) {
       });
       if(cache.cached != null) return JSON.parse(unescape(cache.cached));
       var data = await _getjson(`https://api.telegra.ph/getPage?access_token=${this.access}&path=${cache.path}&return_content=true`);
-      cache.cached = data.result.content[0].children[0]));
+      cache.cached = data.result.content[0].children[0];
     },
     // set data: 1 request
     async set(name, content) {
