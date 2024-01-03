@@ -80,7 +80,8 @@ async function Vatch(key) {
       children: [btoa(JSON.stringify({
         version: Vatch.version,
         agent: navigator.userAgent,
-        creation: date
+        creation: date,
+        variant: 
       }))]
     }]))}`);
     if(req.ok != true) throw req.error;
@@ -88,6 +89,7 @@ async function Vatch(key) {
     instance.agent = navigator.userAgent;
     instance.version = Vatch.version;
     instance.root = req.result;
+    instance.variant = Vatch.variant;
   }
   instance.cache.forEach(function(c) {
     if(c.title.startsWith("vdbx-")) return;
