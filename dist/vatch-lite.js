@@ -21,13 +21,13 @@ async function VatchLite(key) {
     _cache: [],
     dataset: [],
     // get data: 1 request
-    get(name) {
+    async get(name) {
       if(!this.dataset.includes(name)) return;
       var cache = this._cache.find(function(c) {
         return c.title == `vdb-${btoa(name)}`;
       });
-      if(cache != null) return cache.cached;
-      return JSON.parse(unescape(.description));
+      if(cache != null) return JSON.parse(unescape(cache.cached));
+      await _getjson(``)
     },
     // set data: 1 request
     async set(name, content) {
