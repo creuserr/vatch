@@ -40,7 +40,7 @@ async function VatchLite(key) {
         this._cache.push({
           title: `vdb-${btoa(name)}`,
           path: req.result.path,
-          description: content
+          cached: content
         });
         this.dataset.push(name);
       } else {
@@ -51,7 +51,7 @@ async function VatchLite(key) {
           return c;
         }).path;
         var req = await _getjson(`https://api.telegra.ph/editPage?access_token=${this.access}&path=${path}&title=vdb-${btoa(name)}&content=${reqc}`);
-        this._cache[i].description = content;
+        this._cache[i].cached = content;
       }
     }
   }
