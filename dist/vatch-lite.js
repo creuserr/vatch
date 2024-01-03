@@ -27,7 +27,7 @@ async function VatchLite(key) {
         return c.title == `vdb-${btoa(name)}`;
       });
       if(cache != null) return JSON.parse(unescape(cache.cached));
-      await _getjson(``)
+      await _getjson(`https://api.telegra.ph/getPage?access_token=${`)
     },
     // set data: 1 request
     async set(name, content) {
@@ -60,7 +60,7 @@ async function VatchLite(key) {
   if(key != null) {
     // init database: 1 request
     instance.access = key;
-    var req = await _getjson(`https://api.telegra.ph/getPageList?access_token=${key}`);
+    var req = await _getjson(`https://api.telegra.ph/getPageList?access_token=${key}&limit=200`);
     if(req.ok != true) throw req.error;
     instance._cache = req.result.pages;
   } else {
