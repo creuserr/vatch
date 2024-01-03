@@ -59,17 +59,10 @@ async function Vatch(key) {
     // init database: 1 request
     instance.access = key;
     var req = await _getjson(`https://api.telegra.ph/getPageList?access_token=${key}`);
-    if(req.ok != true) throw req.error;
-    var page = req.result.pages.filter(function(i) {
-      return i.title.startsWith("vdbx-");
-    })[0];
-    var content = JSON.parse(unescape(page.description));
-    instance.creation = content.creation;
-    instance.agent = content.agent;
-    instance.version = content.version;
+    if(req.ok != true) throw req.error
     instance.cache = req.result.pages;
   } else {
-    // create database: 2 requests
+    // create database: 1 request
     var n = _hash(Math.random().toString());
     var req = await _getjson(`https://api.telegra.ph/createAccount?short_name=vdbx-${n}`);
     if(req.ok != true) throw req.error;
